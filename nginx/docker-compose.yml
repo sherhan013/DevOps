@@ -1,12 +1,29 @@
 version: "2.4"
+networks:
+    web_net:
+        name: 'web_net'
+
+
 services:
   webhost:
     image: nginx
     container_name: nginx
     ports:
       - 80:80
-    restart: always    
+      - 443:443
     volumes:
       - ./html:/usr/share/nginx/html
       - ./nginx.conf:/etc/nginx/nginx.conf
- 
+      - ./ssl:/etc/nginx/ssl
+    networks:
+        - web_net
+
+
+
+  webhost1:
+    image: nginx
+    container_name: nginx1
+    ports:
+      - 81:80
+    networks:
+        - web_net
